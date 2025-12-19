@@ -89,6 +89,14 @@ main p {
   width: 100%;
 }
 
+.navbar-brand img {
+    height: 50px !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    border-radius: 0;
+    box-shadow: none;
+}
 
  
 
@@ -321,17 +329,35 @@ img {
   box-shadow: 0 8px 20px rgba(0,0,0,0.06);
   display: flex;
   flex-direction: column;
+  will-change: transform, opacity;
 }
 
-.gallery-item img {
+/* hide gallery items only when JS is enabled; this prevents items from being invisible if JS throws */
+.js .gallery-item {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.gallery-thumb {
   width: 100%;
-  height: 260px;
-  object-fit: cover;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f6f6f6;
+}
+
+.gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
   display: block;
   transition: transform 0.45s ease, filter 0.45s ease;
 }
 
-.gallery-item:hover img {
+.gallery-item:hover .gallery-thumb img {
   transform: scale(1.03);
 }
 
@@ -344,10 +370,24 @@ img {
 }
 
 @media (max-width: 768px) {
-  .gallery-item img {
-    height: 200px;
+  .gallery-thumb {
+    aspect-ratio: 1 / 1;
+  }
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   }
 }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+.gallery-item.in-view { animation: fadeInUp .55s ease both; }
+.gallery-item.in-view:nth-child(4n+1) { animation-delay: 0ms; }
+.gallery-item.in-view:nth-child(4n+2) { animation-delay: 90ms; }
+.gallery-item.in-view:nth-child(4n+3) { animation-delay: 180ms; }
+.gallery-item.in-view:nth-child(4n+4) { animation-delay: 270ms; }
 
 .card {
   background-color: #fff;

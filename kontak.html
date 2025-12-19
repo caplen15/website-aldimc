@@ -25,6 +25,7 @@
                         <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
                         <li class="nav-item"><a class="nav-link" href="tentang.html">Tentang</a></li>
                         <li class="nav-item"><a class="nav-link" href="layanan.html">Layanan</a></li>
+                        <li class="nav-item"><a class="nav-link" href="artikel.html">Artikel</a></li>
                         <li class="nav-item"><a class="nav-link" href="galeri.html">Galeri</a></li>
                         <li class="nav-item"><a class="nav-link" href="testimoni.html">Testimoni</a></li>
                         <li class="nav-item"><a class="nav-link active" href="kontak.html">Kontak</a></li>
@@ -48,17 +49,7 @@
                             <div class="form-hint text-muted" id="hint-nama">Contoh: Aldi Ramadhan</div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email *</label>
-                            <input type="email" id="email" name="email" class="form-control" required>
-                            <div class="form-hint text-muted" id="hint-email">Contoh: nama@domain.com</div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="nomer" class="form-label">Nomor WhatsApp *</label>
-                            <input type="number" id="nomer" name="nomer" class="form-control" placeholder="08xx xxxx xxxx" required>
-                            <div class="form-hint text-muted" id="hint-nomer">Masukkan angka, minimal 10 digit (tanpa spasi)</div>
-                        </div>
+                        <!-- Email dan Nomor WA dihapus atas permintaan; komunikasi akan dilakukan melalui WhatsApp saat mengirim permintaan -->
 
                         <div class="mb-3">
                             <label for="tanggal" class="form-label">Tanggal Acara *</label>
@@ -68,8 +59,9 @@
 
                         <div class="mb-3">
                             <label for="lokasi" class="form-label">Lokasi Acara *</label>
-                            <input type="text" id="lokasi" name="lokasi" class="form-control" placeholder="Kota/Alamat" required>
-                            <div class="form-hint text-muted" id="hint-lokasi">Contoh: Kota Pekalongan atau alamat lengkap</div>
+                            <input type="text" id="lokasi" name="lokasi" class="form-control" placeholder="Kota/Alamat" list="lokasiOptions" required>
+                            <datalist id="lokasiOptions"></datalist>
+                            <div class="form-hint text-muted" id="hint-lokasi">Contoh: Kota Pekalongan atau alamat lengkap (pilih dari saran untuk estimasi)</div>
                         </div>
 
                         <div class="mb-3">
@@ -83,6 +75,17 @@
                                 <option value="workshop">Workshop/Seminar</option>
                                 <option value="lainnya">Lainnya</option>
                             </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="keperluan" class="form-label">Keperluan *</label>
+                            <select id="keperluan" name="keperluan" class="form-control" required>
+                                <option value="">-- Pilih Keperluan --</option>
+                                <option value="cek-tanggal">Memastikan ketersediaan tanggal</option>
+                                <option value="tanya-pricelist">Menanyakan pricelist / harga</option>
+                                <option value="lainnya">Lain-lain</option>
+                            </select>
+                            <div class="form-hint text-muted" id="hint-keperluan">Pilih tujuan utama kontak</div>
                         </div>
 
                         <div class="mb-3">
@@ -102,6 +105,23 @@
                         <button type="submit" class="btn btn-warning btn-lg">Kirim Pesan</button>
                         <button type="reset" class="btn btn-secondary btn-lg ms-2">Hapus</button>
                     </form>
+
+                    <div class="estimasi mt-4">
+                        <h4>Estimasi Biaya Transport</h4>
+                        <p class="text-muted">Pilih lokasi acara untuk melihat estimasi jarak dan biaya transportasi (estimasi saja).</p>
+                        <div class="row g-2 align-items-center">
+                            <div class="col-auto">
+                                <select id="estimasiLokasi" class="form-select" aria-label="Pilih lokasi estimasi">
+                                    <option value="">-- Pilih Lokasi Acara --</option>
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" id="hitungEstimasi" class="btn btn-outline-warning">Hitung Estimasi</button>
+                            </div>
+                        </div>
+                        <div id="hasilEstimasi" class="mt-3" aria-live="polite"></div>
+                        <div id="estimasiList" class="mt-2 small text-muted" aria-hidden="true" style="display:none"></div>
+                    </div>
                 </div>
             </div>
 
@@ -159,7 +179,8 @@
                     <h5>Menu</h5>
                     <ul class="list-unstyled">
                         <li><a href="index.html" class="text-decoration-none">Beranda</a></li>
-                        <li><a href="layanan.html" class="text-decoration-none">Layanan & Harga</a></li>
+                        <li><a href="artikel.html" class="text-decoration-none">Artikel</a></li>
+                        <li><a href="layanan.html" class="text-decoration-none">Layanan</a></li>
                         <li><a href="kontak.html" class="text-decoration-none">Kontak</a></li>
                     </ul>
                 </div>
@@ -167,7 +188,8 @@
                     <h5>Ikuti Kami</h5>
                         <ul class="list-inline social-icons">
                         <li class="list-inline-item"><a href="https://www.instagram.com/aldiii.mc" target="_blank" rel="noopener noreferrer" aria-label="Instagram Aldi MC"><i class="bi bi-instagram"></i></a></li>
-                        <li class="list-inline-item"><a href="https://www.facebook.com/aldiii.mc" target="_blank" rel="noopener noreferrer" aria-label="Facebook Aldi MC"><i class="bi bi-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="https://www.tiktok.com/@aldiieaja?_r=1&_t=ZS-92LVKngoOY5" target="_blank" rel="noopener noreferrer" aria-label="Tiktok Aldi MC"><i class="bi bi-tiktok"></i></a></li>
+                        <li class="list-inline-item"><a href="https://www.threads.com/@aldiii.mc?igshid=NTc4MTIwNjQ2YQ==" target="_blank" rel="noopener noreferrer" aria-label="Thread Aldi MC"><i class="bi bi-threads"></i></a></li>
                         <li class="list-inline-item"><a href="https://wa.me/081933782537" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Aldi MC"><i class="bi bi-whatsapp"></i></a></li>
                     </ul>
                 </div>
